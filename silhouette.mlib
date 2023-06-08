@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<materialLib name="Silhouette">
+
+	<shaders>
+		<shader name="silhouette"	vs = "shaders/silhouette.vert"
+									gs = "shaders/silhouette.geom"
+									ps = "shaders/silhouette.frag" />
+
+		<shader name="early"		vs = "shaders/early.vert"
+									ps = "shaders/early.frag" />
+
+		<shader name="shading"		vs = "shaders/shading.vert"
+									ps = "shaders/shading.frag" />
+
+
+
+	</shaders>
+	
+	<states>
+		<state name="blendpar">
+				<BLEND value="TRUE" />
+				<BLEND_SRC value="SRC_ALPHA" />
+				<BLEND_DST value="ONE_MINUS_SRC_ALPHA" />
+		</state>
+	</states>
+
+	<materials>
+		<material name="silhouette">
+			<shader name="silhouette">
+				<values>
+					<valueof uniform="mPVM" 
+							 type="RENDERER" context="CURRENT" 
+							 component="PROJECTION_VIEW_MODEL" />
+
+					<valueof uniform="mVM" 
+							 type="RENDERER" context="CURRENT" 
+							 component="VIEW_MODEL" />
+
+					<valueof uniform="mNormal" 
+							 type="RENDERER" context="CURRENT" 
+							 component="NORMAL" />
+
+					<valueof uniform="mView" 
+							 type="RENDERER" context="CURRENT" 
+							 component="VIEW" />
+							 
+					<valueof uniform="lineColor"
+							 type="RENDERER" context="CURRENT"
+							 component="LineColor" />
+
+					<valueof uniform="edgeOverdraw"
+							 type="RENDERER" context="CURRENT"
+							 component="PctExtend" />
+
+					<valueof uniform="edgeWidth"
+							 type="RENDERER" context="CURRENT"
+							 component="EdgeWidth" />
+
+					<valueof uniform="normalThreshold"
+							 type="RENDERER" context="CURRENT"
+							 component="NormalThreshold" />
+
+					<valueof uniform="lightDir" 
+							 type="LIGHT" context="Sun"
+							 component="DIRECTION" />
+				</values>
+			</shader>
+			<state name="blendpar"/>
+		</material>
+
+		<material name="early">
+			<shader name="early">
+				<values>
+					<valueof uniform="mPVM" 
+							 type="RENDERER" context="CURRENT" 
+							 component="PROJECTION_VIEW_MODEL" />
+
+					<valueof uniform="mNormal" 
+							 type="RENDERER" context="CURRENT" 
+							 component="NORMAL" />
+				</values>
+			</shader>
+		</material>
+
+		<material name="shading">
+			<shader name="shading">
+				<values>
+					<valueof uniform="mPVM" 
+							 type="RENDERER" context="CURRENT" 
+							 component="PROJECTION_VIEW_MODEL" />
+
+					<valueof uniform="mNormal" 
+							 type="RENDERER" context="CURRENT" 
+							 component="NORMAL" />
+
+					<valueof uniform="mView" 
+							 type="RENDERER" context="CURRENT" 
+							 component="VIEW" />
+							 
+					<valueof uniform="lightDir" 
+							 type="LIGHT" context="Sun"
+							 component="DIRECTION" />
+				</values>
+			</shader>
+		</material>
+	</materials>
+</materialLib>	
