@@ -1,4 +1,4 @@
-#version 330
+#version 450
 
 // in
 in vec3 gNormal; // Normal in camera coords.

@@ -6,8 +6,8 @@
 									gs = "shaders/silhouette.geom"
 									ps = "shaders/silhouette.frag" />
 
-		<shader name="early"		vs = "shaders/early.vert"
-									ps = "shaders/early.frag" />
+		<shader name="gBuffer"		vs = "shaders/gBuffer.vert"
+									ps = "shaders/gBuffer.frag" />
 
 		<shader name="shading"		vs = "shaders/shading.vert"
 									ps = "shaders/shading.frag" />
@@ -15,6 +15,16 @@
 
 
 	</shaders>
+
+	<renderTargets>
+		<renderTarget name = "gBuffer" >
+			<SIZE width="512" height="512"/>
+			<CLEAR_VALUES r="0.0" g="0.0" b="0.0" a="0.0"/>
+			<colors>
+				<color name="gBufferNormal" internalFormat="RGBA"  />
+			</colors>	
+		</renderTarget>
+	</renderTargets>
 	
 	<states>
 		<state name="blendpar">
@@ -56,10 +66,6 @@
 							 type="RENDERER" context="CURRENT"
 							 component="EdgeWidth" />
 
-					<valueof uniform="normalThreshold"
-							 type="RENDERER" context="CURRENT"
-							 component="NormalThreshold" />
-
 					<valueof uniform="lightDir" 
 							 type="LIGHT" context="Sun"
 							 component="DIRECTION" />
@@ -68,8 +74,8 @@
 			<state name="blendpar"/>
 		</material>
 
-		<material name="early">
-			<shader name="early">
+		<material name="gBuffer">
+			<shader name="gBuffer">
 				<values>
 					<valueof uniform="mPVM" 
 							 type="RENDERER" context="CURRENT" 
@@ -100,8 +106,15 @@
 					<valueof uniform="lightDir" 
 							 type="LIGHT" context="Sun"
 							 component="DIRECTION" />
+										
+					<valueof uniform="texNormal" 
+							 type="TEXTURE_BINDING" context="CURRENT" 
+							 component="UNIT" id="0" />
 				</values>
 			</shader>
+			<textures>
+				<texture UNIT="0" name="gBufferNormal" />
+			</textures>
 		</material>
 	</materials>
 </materialLib>	

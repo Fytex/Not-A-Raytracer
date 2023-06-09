@@ -1,6 +1,6 @@
-#version 330
+#version 450
 
-layout(triangles_adjacency) in;
+layout (triangles_adjacency) in;
 layout (triangle_strip, max_vertices=15) out;
 
 // in
@@ -10,7 +10,6 @@ in vec3 vLightDir[];
 // uniforms
 uniform float edgeOverdraw; // percentage to extend the quads beyond the edge
 uniform float edgeWidth;    // width of the silhouette edge in clip coords.
-uniform int normalThreshold;
 
 // out
 out vec3 gNormal;
@@ -41,7 +40,7 @@ void emitEdge(vec3 p0, vec3 p1){
     /*
         C --------------- D  
         |                 |
-        |    p1     p2    |
+        p0                p1
         |                 |
         A --------------- B
     */
