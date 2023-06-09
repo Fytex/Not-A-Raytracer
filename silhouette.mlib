@@ -28,7 +28,7 @@
 	</renderTargets>
 	
 	<states>
-		<state name="blendpar">
+		<state name="values">
 				<BLEND value="TRUE" />
 				<BLEND_SRC value="SRC_ALPHA" />
 				<BLEND_DST value="ONE_MINUS_SRC_ALPHA" />
@@ -43,25 +43,17 @@
 							 type="RENDERER" context="CURRENT" 
 							 component="PROJECTION_VIEW_MODEL" />
 
-					<valueof uniform="mVM" 
-							 type="RENDERER" context="CURRENT" 
-							 component="VIEW_MODEL" />
-
 					<valueof uniform="mNormal" 
 							 type="RENDERER" context="CURRENT" 
 							 component="NORMAL" />
-
-					<valueof uniform="mView" 
-							 type="RENDERER" context="CURRENT" 
-							 component="VIEW" />
 							 
 					<valueof uniform="lineColor"
 							 type="RENDERER" context="CURRENT"
 							 component="LineColor" />
 
-					<valueof uniform="edgeOverdraw"
+					<valueof uniform="edgeOverhangLength"
 							 type="RENDERER" context="CURRENT"
-							 component="PctExtend" />
+							 component="EdgeOverhangLength" />
 
 					<valueof uniform="edgeWidth"
 							 type="RENDERER" context="CURRENT"
@@ -76,7 +68,7 @@
 							 component="UNIT" id="0" />
 				</values>
 			</shader>
-			<state name="blendpar"/>
+			<state name="values"/>
 			<textures>
 				<texture name="bufferDepth" UNIT="0"/>
 			</textures>

@@ -4,8 +4,8 @@
 		
 		<attributes>
 			<attribute type="RENDERER" name="LineColor" data="VEC4" x="0.0" y="0.0" z="0.0" w="1.0"/>
-			<attribute type="RENDERER" name="PctExtend" data="FLOAT" value="0.0"/>
-			<attribute type="RENDERER" name="EdgeWidth" data="FLOAT" value="0.015"/>
+			<attribute type="RENDERER" name="EdgeOverhangLength" data="FLOAT" value="0.0"/>
+			<attribute type="RENDERER" name="EdgeWidth" data="FLOAT" value="0.02"/>
 		</attributes>
 
 		<scenes>
@@ -87,7 +87,7 @@
 	<interface>
         <window label="settings">
 			<var label="Line color" type="RENDERER" context="CURRENT" component="LineColor" mode="COLOR" />
-			<var label="Pct Extend" type="RENDERER" context="CURRENT" component="PctExtend" def="min=0 max=1"/>
+			<var label="Edge Overhang Length" type="RENDERER" context="CURRENT" component="EdgeOverhangLength" def="min=0 max=0.5"/>
 			<var label="Edge Width" type="RENDERER" context="CURRENT" component="EdgeWidth" def="min=0 max=0.1"/>
          </window>
     </interface>

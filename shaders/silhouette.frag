@@ -1,7 +1,7 @@
 #version 450
 
 // in
-in vec3 gNormal; // Normal in camera coords.
+in vec3 gNormal;
 in vec3 gLightDir;
 flat in float gDist;
 in vec3 gSpine;

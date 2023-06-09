@@ -1,8 +1,7 @@
 #version 450
 
 // in
-//in vec3 vNormal;
-in vec3 vLightDir;
+in vec3 ld;
 in vec2 tc;
 
 // uniforms
@@ -21,7 +20,7 @@ void main(){
 		
 		vec4 diffuse = vec4(1.0, 0.0, 0.0, 1.0);
 		//vec3 n = normalize(vNormal);
-		vec3 ldn = normalize(vLightDir);
+		vec3 ldn = normalize(ld);
 		float intensity = max(dot(n, ldn), 0.0);
 		//float intensity = 1.0;
 		

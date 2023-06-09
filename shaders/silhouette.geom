@@ -3,13 +3,10 @@
 layout (triangles_adjacency) in;
 layout (triangle_strip, max_vertices=15) out;
 
-// in
-in vec3 vNormal[];      // Normal in camera coords.
-in vec3 vLightDir[];
 
 // uniforms
-uniform float edgeOverdraw; // percentage to extend the quads beyond the edge
-uniform float edgeWidth;    // width of the silhouette edge in clip coords.
+uniform float edgeOverhangLength;
+uniform float edgeWidth; 
 
 // out
 out vec3 gNormal;
@@ -32,6 +29,7 @@ bool isFront(vec3 a, vec3 b, vec3 c){
 
 
 void emitEdge(vec3 p0, vec3 p1){
+    vec2 e = edgeOverhangLength * (p1.xy - p0.xy);
     vec2 v = normalize(p1.xy - p0.xy);
     vec2 n = vec2(-v.y, v.x) * edgeWidth; //edge Width vector
 
@@ -47,23 +45,23 @@ void emitEdge(vec3 p0, vec3 p1){
     gSpine = (p0 + 1.0) * 0.5;
     // A
     gDist = -edgeWidth;
-    gl_Position = vec4(p0.xy + n, p0.z, 1.0);
+    gl_Position = vec4(p0.xy + n - e, p0.z, 1.0);
     EmitVertex();
 
     // C
-    gDist = +edgeWidth;
-    gl_Position = vec4(p0.xy - n, p0.z, 1.0);
+    gDist = edgeWidth;
+    gl_Position = vec4(p0.xy - n - e, p0.z, 1.0);
     EmitVertex();
 
     gSpine = (p1 + 1.0) * 0.5;
     // B
     gDist = -edgeWidth;
-    gl_Position = vec4(p1.xy + n, p1.z, 1.0);
+    gl_Position = vec4(p1.xy + n + e, p1.z, 1.0);
     EmitVertex();
 
     // D
-    gDist = +edgeWidth;
-    gl_Position = vec4(p1.xy - n, p1.z, 1.0);
+    gDist = edgeWidth;
+    gl_Position = vec4(p1.xy - n + e, p1.z, 1.0);
     EmitVertex();
     
     EndPrimitive();
