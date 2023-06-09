@@ -14,8 +14,8 @@ uniform float edgeWidth;    // width of the silhouette edge in clip coords.
 // out
 out vec3 gNormal;
 out vec3 gLightDir;
-flat out int gIsEdge;
 flat out float gDist;
+out vec3 gSpine;
 
 
 
@@ -34,8 +34,6 @@ bool isFront(vec3 a, vec3 b, vec3 c){
 void emitEdge(vec3 p0, vec3 p1){
     vec2 v = normalize(p1.xy - p0.xy);
     vec2 n = vec2(-v.y, v.x) * edgeWidth; //edge Width vector
-    
-    gIsEdge = 1;
 
     /*
         C --------------- D  
@@ -46,6 +44,7 @@ void emitEdge(vec3 p0, vec3 p1){
     */
 
 
+    gSpine = (p0 + 1.0) * 0.5;
     // A
     gDist = -edgeWidth;
     gl_Position = vec4(p0.xy + n, p0.z, 1.0);
@@ -56,7 +55,7 @@ void emitEdge(vec3 p0, vec3 p1){
     gl_Position = vec4(p0.xy - n, p0.z, 1.0);
     EmitVertex();
 
-
+    gSpine = (p1 + 1.0) * 0.5;
     // B
     gDist = -edgeWidth;
     gl_Position = vec4(p1.xy + n, p1.z, 1.0);
@@ -91,24 +90,4 @@ void main(){
             emitEdge(p4, p0);
         }
     }
-
-    // Output the original triangle
-    gIsEdge = 0; // Triangle is not part of an edge.
-
-    gNormal = vNormal[0];
-    gLightDir = vLightDir[0];
-    gl_Position = gl_in[0].gl_Position;
-    EmitVertex();
-
-    gNormal = vNormal[2];
-    gLightDir = vLightDir[2];
-    gl_Position = gl_in[2].gl_Position;
-    EmitVertex();
-
-    gNormal = vNormal[4];
-    gLightDir = vLightDir[4];
-    gl_Position = gl_in[4].gl_Position;
-    EmitVertex();
-
-    EndPrimitive();
 }

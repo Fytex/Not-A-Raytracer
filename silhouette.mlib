@@ -22,7 +22,8 @@
 			<CLEAR_VALUES r="0.0" g="0.0" b="0.0" a="0.0"/>
 			<colors>
 				<color name="gBufferNormal" internalFormat="RGBA"  />
-			</colors>	
+			</colors>
+			<depth name="bufferDepth" internalFormat="DEPTH_COMPONENT32F" />
 		</renderTarget>
 	</renderTargets>
 	
@@ -69,9 +70,16 @@
 					<valueof uniform="lightDir" 
 							 type="LIGHT" context="Sun"
 							 component="DIRECTION" />
+
+					<valueof uniform="depthSampler"            
+							 type="TEXTURE_BINDING" context="CURRENT"         
+							 component="UNIT" id="0" />
 				</values>
 			</shader>
 			<state name="blendpar"/>
+			<textures>
+				<texture name="bufferDepth" UNIT="0"/>
+			</textures>
 		</material>
 
 		<material name="gBuffer">
