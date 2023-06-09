@@ -80,6 +80,7 @@
 						toMaterial="silhouette" toLibrary="Silhouette" />
 				</materialMaps>
 			</pass>
+
 		</pipeline>
 	</pipelines>
 

@@ -1,11 +1,14 @@
 #version 450
 
 // in
-in vec3 vNormal;
+in vec3 n;
 
 // out
-layout (location = 0) out vec3 normal; // out vec3 normal
+layout (location = 0) out vec4 texNormal; // out vec4 texNormal
 
 void main(){
-    normal = (vNormal + 1.0) * 0.5;
+    //texNormal = (n + 1.0) * 0.5;
+
+    // normalize and pack normal and tangent
+    texNormal = vec4(normalize(n) * 0.5 + 0.5, 1.0);
 }

@@ -3,7 +3,7 @@
 // in
 //in vec3 vNormal;
 in vec3 vLightDir;
-in vec2 texCoord;
+in vec2 tc;
 
 // uniforms
 uniform sampler2D texNormal;
@@ -12,15 +12,17 @@ uniform sampler2D texNormal;
 out vec4 colorOut;
 
 void main(){
-	vec3 n = texture(texNormal, texCoord).rgb;
+	vec3 n = texture(texNormal, tc).xyz;
 
     if (n == vec3(0,0,0))
         colorOut = vec4(1.0, 1.0, 1.0, 1.0);
 	else {
-	
+		n = normalize(n * 2 - 1);
+		
 		vec4 diffuse = vec4(1.0, 0.0, 0.0, 1.0);
 		//vec3 n = normalize(vNormal);
-		float intensity = max(dot(vLightDir,n),0.0);
+		vec3 ldn = normalize(vLightDir);
+		float intensity = max(dot(n, ldn), 0.0);
 		//float intensity = 1.0;
 		
 		if (intensity > 0.90)

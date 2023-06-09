@@ -9,9 +9,9 @@ uniform mat4 mPVM;
 uniform mat3 mNormal;
 
 // out
-out vec3 vNormal;
+out vec3 n;
 
 void main(){
-    vNormal = mNormal * normal;
+    n = normalize(mNormal * normal);
     gl_Position = mPVM * position;
 }

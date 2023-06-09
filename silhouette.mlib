@@ -91,17 +91,9 @@
 		<material name="shading">
 			<shader name="shading">
 				<values>
-					<valueof uniform="mPVM" 
-							 type="RENDERER" context="CURRENT" 
-							 component="PROJECTION_VIEW_MODEL" />
-
-					<valueof uniform="mNormal" 
-							 type="RENDERER" context="CURRENT" 
-							 component="NORMAL" />
-
 					<valueof uniform="mView" 
-							 type="RENDERER" context="CURRENT" 
-							 component="VIEW" />
+							 type="CAMERA" context="MainCamera" 
+							 component="VIEW_MATRIX" />
 							 
 					<valueof uniform="lightDir" 
 							 type="LIGHT" context="Sun"

@@ -13,14 +13,14 @@ uniform vec4 lightDir; // global space
 
 
 // out
-out vec2 texCoord;
+out vec2 tc;
 //out vec3 vNormal;
 out vec3 vLightDir;
 
 void main(){
     //vNormal = normalize(mNormal * normal);
     vLightDir = normalize(vec3(mView * -lightDir));
-    texCoord = texCoord0;
+    tc = texCoord0;
 
     gl_Position = position;
 }
