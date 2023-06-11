@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<materialLib name="Silhouette">
+<materialLib name="NonPhotorealistic">
 
 	<shaders>
 		<shader name="silhouette"	vs = "shaders/silhouette.vert"
