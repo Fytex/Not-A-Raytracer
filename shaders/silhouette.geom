@@ -1,7 +1,7 @@
 #version 450
 
 layout (triangles_adjacency) in;
-layout (triangle_strip, max_vertices=15) out;
+layout (triangle_strip, max_vertices=12) out;
 
 
 // uniforms
