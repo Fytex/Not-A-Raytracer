@@ -10,6 +10,7 @@ uniform mat3 mNormal;
 
 // out
 out vec3 n;
+out vec4 p;
 
 void main(){
     n = normalize(mNormal * normal);

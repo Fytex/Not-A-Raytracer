@@ -12,6 +12,7 @@ uniform float edgeWidth;
 uniform sampler2D depthSampler;
 
 // out
+layout (location = 0) out vec4 texColor;
 out vec4 colorOut;
 
 
@@ -28,5 +29,7 @@ void main(){
 	if (d > edgeWidth - tipLength)
 	    alpha = 1.0 - (d - edgeWidth + tipLength) / tipLength;
  
+
 	colorOut = vec4(lineColor.xyz, alpha);
+	texColor = colorOut;
 }

@@ -12,6 +12,9 @@
 		<shader name="shading"		vs = "shaders/shading.vert"
 									ps = "shaders/shading.frag" />
 
+		<shader name="distortion"	vs = "shaders/distortion.vert"
+									ps = "shaders/distortion.frag" />
+
 
 
 	</shaders>
@@ -25,15 +28,18 @@
 			</colors>
 			<depth name="bufferDepth" internalFormat="DEPTH_COMPONENT32F" />
 		</renderTarget>
+
+		<renderTarget name = "color" >
+			<SIZE width="512" height="512"/>
+			<CLEAR_VALUES r="0.0" g="0.0" b="0.0" a="0.0"/>
+			<colors>
+				<color name="gBufferColor" internalFormat="RGBA"  />
+			</colors>
+			<depth name="depthMap2" internalFormat="DEPTH_COMPONENT32F"  />
+		</renderTarget>
 	</renderTargets>
 	
-	<states>
-		<state name="values">
-				<BLEND value="TRUE" />
-				<BLEND_SRC value="SRC_ALPHA" />
-				<BLEND_DST value="ONE_MINUS_SRC_ALPHA" />
-		</state>
-	</states>
+
 
 	<materials>
 		<material name="silhouette">
@@ -46,6 +52,10 @@
 					<valueof uniform="mNormal" 
 							 type="RENDERER" context="CURRENT" 
 							 component="NORMAL" />
+					
+					<valueof uniform="mModel" 
+							 type="RENDERER" 
+							 component="MODEL" />
 							 
 					<valueof uniform="lineColor"
 							 type="RENDERER" context="CURRENT"
@@ -68,7 +78,7 @@
 							 component="UNIT" id="0" />
 				</values>
 			</shader>
-			<state name="values"/>
+
 			<textures>
 				<texture name="bufferDepth" UNIT="0"/>
 			</textures>
@@ -106,6 +116,35 @@
 			</shader>
 			<textures>
 				<texture UNIT="0" name="gBufferNormal" />
+			</textures>
+		</material>
+
+		<material name="distortion">
+			<shader name="distortion">
+				<values>
+					<valueof uniform="mView" 
+							 type="CAMERA" context="MainCamera" 
+							 component="VIEW_MATRIX" />
+							 
+					<valueof uniform="lightDir" 
+							 type="LIGHT" context="Sun"
+							 component="DIRECTION" />
+										
+					<valueof uniform="mModel" 
+							 type="RENDERER" 
+							 component="MODEL" />
+					
+					<valueof uniform="noiseAmp"
+							 type="RENDERER" context="CURRENT"
+							 component="NoiseAmp" />
+
+					<valueof uniform="texColor" 
+							 type="TEXTURE_BINDING" context="CURRENT" 
+							 component="UNIT" id="0" />
+				</values>
+			</shader>
+			<textures>
+				<texture UNIT="0" name="gBufferColor" />
 			</textures>
 		</material>
 	</materials>

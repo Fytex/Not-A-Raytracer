@@ -8,6 +8,7 @@ in vec2 tc;
 uniform sampler2D texNormal;
 
 // out
+layout (location = 0) out vec4 texColor;
 out vec4 colorOut;
 
 void main(){
@@ -33,4 +34,7 @@ void main(){
 		else
 			colorOut = 0.35 * diffuse;
 	}
+
+
+	texColor = colorOut;
 }

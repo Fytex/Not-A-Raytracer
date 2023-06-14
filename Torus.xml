@@ -6,6 +6,7 @@
 			<attribute type="RENDERER" name="LineColor" data="VEC4" x="0.0" y="0.0" z="0.0" w="1.0"/>
 			<attribute type="RENDERER" name="EdgeOverhangLength" data="FLOAT" value="0.0"/>
 			<attribute type="RENDERER" name="EdgeWidth" data="FLOAT" value="0.02"/>
+			<attribute type="RENDERER" name="NoiseAmp" data="FLOAT" value="0.02"/>
 		</attributes>
 
 		<scenes>
@@ -64,6 +65,7 @@
 			<pass class="quad" name="shading">
 				<viewport name="MainViewport" />
 				<material name="shading" fromLibrary="NonPhotorealistic" />
+				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
 			</pass>
 			<pass class="default" name="silhouette">
 				<COLOR_CLEAR value="false" />
@@ -79,6 +81,12 @@
 					<map fromMaterial="*" 
 						toMaterial="silhouette" toLibrary="NonPhotorealistic" />
 				</materialMaps>
+				<viewport name="MainViewport" />
+				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
+			</pass>
+			<pass class="quad" name="distortion">
+				<viewport name="MainViewport" />
+				<material name="distortion" fromLibrary="NonPhotorealistic" />
 			</pass>
 
 		</pipeline>
@@ -89,6 +97,7 @@
 			<var label="Line color" type="RENDERER" context="CURRENT" component="LineColor" mode="COLOR" />
 			<var label="Edge Overhang Length" type="RENDERER" context="CURRENT" component="EdgeOverhangLength" def="min=0 max=0.5"/>
 			<var label="Edge Width" type="RENDERER" context="CURRENT" component="EdgeWidth" def="min=0 max=0.1"/>
+			<var label="Distortion" type="RENDERER" context="CURRENT" component="NoiseAmp" def="min=0.01 max=0.06"/>
          </window>
     </interface>
 </project>
