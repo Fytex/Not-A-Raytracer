@@ -3,10 +3,11 @@
 // in
 in vec3 ld;
 in vec2 tc, tc_paper;
+in vec3 inc;
 
 // uniforms
 uniform sampler2D texNormal;
-uniform sampler2D texPaper;
+uniform float occupancy;
 
 // out
 layout (location = 0) out vec4 texColor;
@@ -16,7 +17,7 @@ void main(){
 	vec3 n = texture(texNormal, tc).xyz;
 
     if (n == vec3(0,0,0))
-        colorOut = texture(texPaper, tc);
+        discard;
 	else {
 		n = normalize(n * 2 - 1);
 		
@@ -24,6 +25,7 @@ void main(){
 		//vec3 n = normalize(vNormal);
 		vec3 ldn = normalize(ld);
 		float intensity = max(dot(n, ldn), 0.0);
+
 		//float intensity = 1.0;
 		
 		if (intensity > 0.90)
@@ -34,10 +36,8 @@ void main(){
 			colorOut = 0.5 * diffuse;
 		else
 			colorOut = 0.35 * diffuse;
-
-
-		colorOut += texture(texPaper, tc) * 0.35;
+		
 	}
 
-	texColor = colorOut;
+	texColor = vec4(colorOut.xyz, occupancy);
 }

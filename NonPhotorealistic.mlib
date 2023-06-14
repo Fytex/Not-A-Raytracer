@@ -2,8 +2,15 @@
 <materialLib name="NonPhotorealistic">
 
 	<textures>
-		<texture name="paper" filename="textures/paper.png" mipmap="true" />
-	</textures>
+        <cubeMap name="paper" 
+			filePosX="textures/paper_skybox/posx.jpg"
+			fileNegX="textures/paper_skybox/negx.jpg"
+			filePosY="textures/paper_skybox/posy.jpg"
+			fileNegY="textures/paper_skybox/negy.jpg"
+			filePosZ="textures/paper_skybox/posz.jpg"
+			fileNegZ="textures/paper_skybox/negz.jpg"	
+		/>
+    </textures>
 
 	<shaders>
 		<shader name="silhouette"	vs = "shaders/silhouette.vert"
@@ -19,7 +26,23 @@
 		<shader name="distortion"	vs = "shaders/distortion.vert"
 									ps = "shaders/distortion.frag" />
 
+		<shader name="SkyBox" 		vs = "shaders/skybox.vert" 
+                              		ps = "shaders/skybox.frag" />
+
 	</shaders>
+
+	<states>
+		<state name="skybox" >
+				<CULL_TYPE value="FRONT" />
+				<DEPTH_MASK value="false" />
+		</state>
+		<state name="transparent" >
+            <ORDER value="2"/>
+            <BLEND value="true"/>
+            <BLEND_SRC value="SRC_ALPHA"/>
+            <BLEND_DST value="ONE_MINUS_SRC_ALPHA"/>
+        </state>
+	</states>
 
 	<renderTargets>
 		<renderTarget name = "gBuffer" >
@@ -40,7 +63,6 @@
 			<depth name="depthMap2" internalFormat="DEPTH_COMPONENT32F"  />
 		</renderTarget>
 	</renderTargets>
-	
 
 
 	<materials>
@@ -50,14 +72,6 @@
 					<valueof uniform="mPVM" 
 							 type="RENDERER" context="CURRENT" 
 							 component="PROJECTION_VIEW_MODEL" />
-
-					<valueof uniform="mNormal" 
-							 type="RENDERER" context="CURRENT" 
-							 component="NORMAL" />
-					
-					<valueof uniform="mModel" 
-							 type="RENDERER" 
-							 component="MODEL" />
 							 
 					<valueof uniform="lineColor"
 							 type="RENDERER" context="CURRENT"
@@ -70,10 +84,6 @@
 					<valueof uniform="edgeWidth"
 							 type="RENDERER" context="CURRENT"
 							 component="EdgeWidth" />
-
-					<valueof uniform="lightDir" 
-							 type="LIGHT" context="Sun"
-							 component="DIRECTION" />
 
 					<valueof uniform="depthSampler"            
 							 type="TEXTURE_BINDING" context="CURRENT"         
@@ -110,20 +120,21 @@
 					<valueof uniform="lightDir" 
 							 type="LIGHT" context="Sun"
 							 component="DIRECTION" />
+
+					<valueof uniform="occupancy"
+							 type="RENDERER" context="CURRENT"
+							 component="Occupancy" />
 										
 					<valueof uniform="texNormal" 
 							 type="TEXTURE_BINDING" context="CURRENT" 
 							 component="UNIT" id="0" />
-
-					<valueof uniform="texPaper" 
-							 type="TEXTURE_BINDING" context="CURRENT" 
-							 component="UNIT" id="1" />
 				</values>
 			</shader>
+			<state name = "transparent" />
 			<textures>
 				<texture UNIT="0" name="gBufferNormal" />
-				<texture UNIT="1" name="paper" />
 			</textures>
+
 		</material>
 
 		<material name="distortion">
@@ -154,5 +165,29 @@
 				<texture UNIT="0" name="gBufferColor" />
 			</textures>
 		</material>
+
+		<material name="skybox" >
+            <shader name="SkyBox" >
+                <values>
+                    <valueof uniform="m_pvm" 
+                            type="RENDERER" 
+                            component="PROJECTION_VIEW_MODEL" />
+                    <valueof uniform="cam_pos" 
+                            type="CAMERA"
+                            component="POSITION" />
+                    <valueof uniform="texPaper" 
+                            type="TEXTURE_BINDING" 
+                            component="UNIT" id ="0" />
+
+              </values>
+            </shader>
+            <textures>
+               <texture name="paper" UNIT="0" >
+                    <WRAP_S value="CLAMP_TO_EDGE" />
+                    <WRAP_T value="CLAMP_TO_EDGE" />
+                </texture>
+            </textures>
+            <state name = "skybox" />
+        </material>
 	</materials>
 </materialLib>	
