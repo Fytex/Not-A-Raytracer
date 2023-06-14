@@ -8,6 +8,8 @@ in vec3 pw;
 
 // uniforms
 uniform sampler2D texColor;
+uniform sampler2D texDepthMap;
+uniform sampler2D texBackgroundDepth;
 uniform float noiseAmp;
 
 // out
@@ -29,7 +31,16 @@ void main(){
 
     new_tc = vec2(clamp(0, new_tc.s, 0.99), clamp(0, new_tc.t, 0.99));
 
-    colorOut = texture(texColor, new_tc);
+
+    float old_depth = texture(texDepthMap, tc).r;
+    float old_bgDepth = texture(texBackgroundDepth, tc).r;
+    float depth = texture(texDepthMap, new_tc).r;
+    float bgDepth = texture(texBackgroundDepth, new_tc).r;
+
+    if (old_depth == old_bgDepth && depth == bgDepth) // Do not change background
+        colorOut = texture(texColor, tc);
+    else
+        colorOut = texture(texColor, new_tc);     
 }
 
 

@@ -78,16 +78,42 @@
                     <map fromMaterial="skybox"
                         toMaterial="skybox" toLibrary="NonPhotorealistic" />
                 </materialMaps>
+				<renderTarget name="depth" fromLibrary="NonPhotorealistic"/>
+            </pass>
+			<pass class="default" name="SkyBox" >
+                <scenes>
+                    <scene name="SkyBox" />
+                </scenes>
+                <camera name = "MainCamera" />
+				<viewport name="MainViewport" />
+                <materialMaps>
+                    <map fromMaterial="skybox"
+                        toMaterial="skybox" toLibrary="NonPhotorealistic" />
+                </materialMaps>
+				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
+            </pass>
+			<pass class="default" name="SkyBox" >
+                <scenes>
+                    <scene name="SkyBox" />
+                </scenes>
+                <camera name = "MainCamera" />
+				<viewport name="MainViewport" />
+                <materialMaps>
+                    <map fromMaterial="skybox"
+                        toMaterial="skybox" toLibrary="NonPhotorealistic" />
+                </materialMaps>
 				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
             </pass>
 			<pass class="quad" name="shading">
 				<COLOR_CLEAR value="false" />
+				<DEPTH_CLEAR value="false" />
 				<viewport name="MainViewport" />
 				<material name="shading" fromLibrary="NonPhotorealistic" />
 				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
 			</pass>
 			<pass class="default" name="silhouette">
 				<COLOR_CLEAR value="false" />
+				<DEPTH_CLEAR value="false" />
 
 				<scenes>
 					<scene name="Model" />
@@ -116,7 +142,7 @@
 			<var label="Line color" type="RENDERER" context="CURRENT" component="LineColor" mode="COLOR" />
 			<var label="Edge Overhang Length" type="RENDERER" context="CURRENT" component="EdgeOverhangLength" def="min=0 max=0.5"/>
 			<var label="Edge Width" type="RENDERER" context="CURRENT" component="EdgeWidth" def="min=0 max=0.1"/>
-			<var label="Distortion" type="RENDERER" context="CURRENT" component="NoiseAmp" def="min=0.01 max=0.06"/>
+			<var label="Distortion" type="RENDERER" context="CURRENT" component="NoiseAmp" def="min=0 max=0.06"/>
 			<var label="Occupancy" type="RENDERER" context="CURRENT" component="Occupancy" def="min=0 max=1"/>
          </window>
     </interface>
