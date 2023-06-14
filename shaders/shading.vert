@@ -10,7 +10,7 @@ uniform vec4 lightDir;
 
 
 // out
-out vec2 tc;
+out vec2 tc, tc_paper;
 out vec3 ld;
 
 void main(){

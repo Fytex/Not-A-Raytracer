@@ -2,10 +2,11 @@
 
 // in
 in vec3 ld;
-in vec2 tc;
+in vec2 tc, tc_paper;
 
 // uniforms
 uniform sampler2D texNormal;
+uniform sampler2D texPaper;
 
 // out
 layout (location = 0) out vec4 texColor;
@@ -15,7 +16,7 @@ void main(){
 	vec3 n = texture(texNormal, tc).xyz;
 
     if (n == vec3(0,0,0))
-        colorOut = vec4(1.0, 1.0, 1.0, 1.0);
+        colorOut = texture(texPaper, tc);
 	else {
 		n = normalize(n * 2 - 1);
 		
@@ -33,8 +34,10 @@ void main(){
 			colorOut = 0.5 * diffuse;
 		else
 			colorOut = 0.35 * diffuse;
-	}
 
+
+		colorOut += texture(texPaper, tc) * 0.35;
+	}
 
 	texColor = colorOut;
 }
