@@ -8,6 +8,8 @@ in vec3 inc;
 // uniforms
 uniform sampler2D texNormal;
 uniform float occupancy;
+uniform int shading_phases;
+uniform vec4 diffuse;
 
 // out
 layout (location = 0) out vec4 texColor;
@@ -22,21 +24,32 @@ void main(){
 	else {
 		n = normalize(n * 2 - 1);
 		
-		vec4 diffuse = vec4(1.0, 0.0, 0.0, 1.0);
-		//vec3 n = normalize(vNormal);
 		vec3 ldn = normalize(ld);
 		float intensity = max(dot(n, ldn), 0.0);
 
-		//float intensity = 1.0;
-		
-		if (intensity > 0.90)
+		float interval = 1.0f / float(shading_phases);
+
+		float intensity_cap = 1.0 - interval;
+
+		while (intensity <= intensity_cap) {
+			intensity_cap -= interval;
+		}
+
+		float level = clamp(0.0f, intensity_cap + interval, 1.0f); // Float-point prevention
+
+		colorOut = diffuse * level;
+
+		/*
+		if (intensity > 0.75)
 			colorOut = diffuse;
-		else if (intensity > 0.75)
-			colorOut = 0.75 * diffuse;
 		else if (intensity > 0.5)
-			colorOut = 0.5 * diffuse;
+			colorOut = diffuse * 0.75;
+		else if (intensity > 0.25)
+			colorOut = diffuse * 0.5;
 		else
-			colorOut = 0.35 * diffuse;
+			colorOut = diffuse * 0.25;
+
+		*/
 		
 	}
 

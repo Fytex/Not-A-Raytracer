@@ -9,6 +9,8 @@
 			<attribute type="RENDERER" name="NoiseAmp" data="FLOAT" value="0.02"/>
 			<attribute type="RENDERER" name="Occupancy" data="FLOAT" value="0.65"/>
 			<attribute type="RENDERER" name="Blur" data="FLOAT" value="0.4"/>
+			<attribute type="RENDERER" name="ShadingPhases" data="INT" value="4"/>
+			<attribute type="RENDERER" name="FillColor" data="VEC4" x="1.0" y="0.0" z="0.0" w="1.0"/>
 		</attributes>
 
 		<scenes>
@@ -123,12 +125,14 @@
 
 	<interface>
         <window label="settings">
-			<var label="Line color" type="RENDERER" context="CURRENT" component="LineColor" mode="COLOR" />
+			<var label="Line Color" type="RENDERER" context="CURRENT" component="LineColor" mode="COLOR" />
 			<var label="Edge Overhang Length" type="RENDERER" context="CURRENT" component="EdgeOverhangLength" def="min=0 max=0.5"/>
 			<var label="Edge Width" type="RENDERER" context="CURRENT" component="EdgeWidth" def="min=0 max=0.1"/>
 			<var label="Distortion" type="RENDERER" context="CURRENT" component="NoiseAmp" def="min=0 max=0.06"/>
 			<var label="Occupancy" type="RENDERER" context="CURRENT" component="Occupancy" def="min=0 max=1"/>
 			<var label="Blur" type="RENDERER" context="CURRENT" component="Blur" def="min=0 max=0.9"/>
+			<var label="Shading Phases" type="RENDERER" context="CURRENT" component="ShadingPhases" def="min=1 max=20"/>
+			<var label="Fill Color" type="RENDERER" context="CURRENT" component="FillColor" mode="COLOR" />
          </window>
     </interface>
 </project>

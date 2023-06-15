@@ -128,6 +128,14 @@
 					<valueof uniform="occupancy"
 							 type="RENDERER" context="CURRENT"
 							 component="Occupancy" />
+					
+					<valueof uniform="shading_phases"
+							 type="RENDERER" context="CURRENT"
+							 component="ShadingPhases" />
+					
+					<valueof uniform="diffuse"
+							type="RENDERER" context="CURRENT"
+							component="FillColor" />
 										
 					<valueof uniform="texNormal" 
 							 type="TEXTURE_BINDING" context="CURRENT" 
