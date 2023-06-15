@@ -13,6 +13,7 @@ uniform float occupancy;
 layout (location = 0) out vec4 texColor;
 out vec4 colorOut;
 
+
 void main(){
 	vec3 n = texture(texNormal, tc).xyz;
 

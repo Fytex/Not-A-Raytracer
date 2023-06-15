@@ -13,6 +13,7 @@ uniform sampler2D depthSampler;
 
 // out
 layout (location = 0) out vec4 texColor;
+layout (location = 1) out vec2 texBackGroundBit;
 out vec4 colorOut;
 
 
@@ -32,4 +33,5 @@ void main(){
 
 	colorOut = vec4(lineColor.xyz, alpha);
 	texColor = colorOut;
+	texBackGroundBit.r = 1;
 }

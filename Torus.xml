@@ -8,6 +8,7 @@
 			<attribute type="RENDERER" name="EdgeWidth" data="FLOAT" value="0.02"/>
 			<attribute type="RENDERER" name="NoiseAmp" data="FLOAT" value="0.02"/>
 			<attribute type="RENDERER" name="Occupancy" data="FLOAT" value="0.65"/>
+			<attribute type="RENDERER" name="Blur" data="FLOAT" value="0.4"/>
 		</attributes>
 
 		<scenes>
@@ -68,30 +69,7 @@
 				<viewport name="MainViewport" />
 				<renderTarget name="gBuffer" fromLibrary="NonPhotorealistic"/>
 			</pass>
-			<pass class="default" name="SkyBox" >
-                <scenes>
-                    <scene name="SkyBox" />
-                </scenes>
-                <camera name = "MainCamera" />
-				<viewport name="MainViewport" />
-                <materialMaps>
-                    <map fromMaterial="skybox"
-                        toMaterial="skybox" toLibrary="NonPhotorealistic" />
-                </materialMaps>
-				<renderTarget name="depth" fromLibrary="NonPhotorealistic"/>
-            </pass>
-			<pass class="default" name="SkyBox" >
-                <scenes>
-                    <scene name="SkyBox" />
-                </scenes>
-                <camera name = "MainCamera" />
-				<viewport name="MainViewport" />
-                <materialMaps>
-                    <map fromMaterial="skybox"
-                        toMaterial="skybox" toLibrary="NonPhotorealistic" />
-                </materialMaps>
-				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
-            </pass>
+
 			<pass class="default" name="SkyBox" >
                 <scenes>
                     <scene name="SkyBox" />
@@ -111,9 +89,14 @@
 				<material name="shading" fromLibrary="NonPhotorealistic" />
 				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
 			</pass>
+			<pass class="quad" name="blur">
+				<COLOR_CLEAR value="false" />
+				<viewport name="MainViewport" />
+				<material name="blur" fromLibrary="NonPhotorealistic" />
+				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
+			</pass>
 			<pass class="default" name="silhouette">
 				<COLOR_CLEAR value="false" />
-				<DEPTH_CLEAR value="false" />
 
 				<scenes>
 					<scene name="Model" />
@@ -130,6 +113,8 @@
 				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
 			</pass>
 			<pass class="quad" name="distortion">
+				<COLOR_CLEAR value="false" />
+				<DEPTH_CLEAR value="false" />
 				<viewport name="MainViewport" />
 				<material name="distortion" fromLibrary="NonPhotorealistic" />
 			</pass>
@@ -144,6 +129,7 @@
 			<var label="Edge Width" type="RENDERER" context="CURRENT" component="EdgeWidth" def="min=0 max=0.1"/>
 			<var label="Distortion" type="RENDERER" context="CURRENT" component="NoiseAmp" def="min=0 max=0.06"/>
 			<var label="Occupancy" type="RENDERER" context="CURRENT" component="Occupancy" def="min=0 max=1"/>
+			<var label="Blur" type="RENDERER" context="CURRENT" component="Blur" def="min=0 max=0.9"/>
          </window>
     </interface>
 </project>

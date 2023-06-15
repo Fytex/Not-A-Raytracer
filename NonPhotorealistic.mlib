@@ -28,6 +28,9 @@
 
 		<shader name="SkyBox" 		vs = "shaders/skybox.vert" 
                               		ps = "shaders/skybox.frag" />
+		
+		<shader name="blur" 		vs = "shaders/blur.vert" 
+                              		ps = "shaders/blur.frag" />
 
 	</shaders>
 
@@ -59,14 +62,9 @@
 			<CLEAR_VALUES r="0.0" g="0.0" b="0.0" a="0.0"/>
 			<colors>
 				<color name="gBufferColor" internalFormat="RGBA"  />
+				<color name="gBufferBackGroundBit" internalFormat="R8"  />
 			</colors>
 			<depth name="depthMap" internalFormat="DEPTH_COMPONENT32F"  />
-		</renderTarget>
-
-		<renderTarget name = "depth" >
-			<SIZE width="512" height="512"/>
-			<CLEAR_VALUES r="0.0" g="0.0" b="0.0" a="0.0"/>
-			<depth name="backgroundDepth" internalFormat="DEPTH_COMPONENT32F"  />
 		</renderTarget>
 	</renderTargets>
 
@@ -170,15 +168,17 @@
 							 type="TEXTURE_BINDING" context="CURRENT" 
 							 component="UNIT" id="1" />
 
-					<valueof uniform="texBackgroundDepth" 
+
+					<valueof uniform="texBackgroundBit" 
 							 type="TEXTURE_BINDING" context="CURRENT" 
-							 component="UNIT" id="2" />
+							 component="UNIT" id="3" />
 				</values>
 			</shader>
 			<textures>
 				<texture UNIT="0" name="gBufferColor" />
 				<texture UNIT="1" name="depthMap" />
-				<texture UNIT="2" name="backgroundDepth" />
+
+				<texture UNIT="3" name="gBufferBackGroundBit" />
 			</textures>
 		</material>
 
@@ -204,6 +204,29 @@
                 </texture>
             </textures>
             <state name = "skybox" />
+        </material>
+
+		<material name="blur" >
+            <shader name="blur" >
+                <values>
+                    <valueof uniform="m_pvm" 
+                            type="RENDERER" 
+                            component="PROJECTION_VIEW_MODEL" />
+                    <valueof uniform="blur"
+							 type="RENDERER" context="CURRENT"
+							 component="Blur" />
+                    <valueof uniform="texColor" 
+							 type="TEXTURE_BINDING" context="CURRENT" 
+							 component="UNIT" id="0" />
+					<valueof uniform="texNormal" 
+							 type="TEXTURE_BINDING" context="CURRENT" 
+							 component="UNIT" id="1" />
+              </values>
+            </shader>
+            <textures>
+            	<texture UNIT="0" name="gBufferColor" />
+				<texture UNIT="1" name="gBufferNormal" />
+            </textures>
         </material>
 	</materials>
 </materialLib>	
