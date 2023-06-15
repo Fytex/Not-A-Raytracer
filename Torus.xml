@@ -69,7 +69,6 @@
 				<viewport name="MainViewport" />
 				<renderTarget name="gBuffer" fromLibrary="NonPhotorealistic"/>
 			</pass>
-
 			<pass class="default" name="SkyBox" >
                 <scenes>
                     <scene name="SkyBox" />
