@@ -92,18 +92,6 @@
                 </materialMaps>
 				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
             </pass>
-			<pass class="default" name="SkyBox" >
-                <scenes>
-                    <scene name="SkyBox" />
-                </scenes>
-                <camera name = "MainCamera" />
-				<viewport name="MainViewport" />
-                <materialMaps>
-                    <map fromMaterial="skybox"
-                        toMaterial="skybox" toLibrary="NonPhotorealistic" />
-                </materialMaps>
-				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
-            </pass>
 			<pass class="quad" name="shading">
 				<COLOR_CLEAR value="false" />
 				<DEPTH_CLEAR value="false" />
