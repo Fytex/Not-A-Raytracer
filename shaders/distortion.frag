@@ -8,7 +8,6 @@ in vec3 pw;
 
 // uniforms
 uniform sampler2D texColor;
-uniform sampler2D texDepthMap;
 
 uniform sampler2D texBackgroundBit;
 uniform float noiseAmp;

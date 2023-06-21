@@ -172,21 +172,15 @@
 							 type="TEXTURE_BINDING" context="CURRENT" 
 							 component="UNIT" id="0" />
 
-					<valueof uniform="texDepthMap" 
-							 type="TEXTURE_BINDING" context="CURRENT" 
-							 component="UNIT" id="1" />
-
 
 					<valueof uniform="texBackgroundBit" 
 							 type="TEXTURE_BINDING" context="CURRENT" 
-							 component="UNIT" id="3" />
+							 component="UNIT" id="1" />
 				</values>
 			</shader>
 			<textures>
 				<texture UNIT="0" name="gBufferColor" />
-				<texture UNIT="1" name="depthMap" />
-
-				<texture UNIT="3" name="gBufferBackGroundBit" />
+				<texture UNIT="1" name="gBufferBackGroundBit" />
 			</textures>
 		</material>
 
@@ -217,9 +211,6 @@
 		<material name="blur" >
             <shader name="blur" >
                 <values>
-                    <valueof uniform="m_pvm" 
-                            type="RENDERER" 
-                            component="PROJECTION_VIEW_MODEL" />
                     <valueof uniform="blur"
 							 type="RENDERER" context="CURRENT"
 							 component="Blur" />

@@ -1,0 +1,139 @@
+<?xml version="1.0" ?>
+<project name="NonPhotorealistic" width="1024" height="1024">
+	<assets>
+		
+		<attributes>
+			<attribute type="RENDERER" name="FillColor" data="VEC4" x="0.0" y="1.0" z="0.0" w="1.0"/>
+			<attribute type="RENDERER" name="LineColor" data="VEC4" x="0.0" y="0.0" z="0.0" w="1.0"/>
+			<attribute type="RENDERER" name="EdgeOverhangLength" data="FLOAT" value="0.5"/>
+			<attribute type="RENDERER" name="EdgeWidth" data="FLOAT" value="0.02"/>
+			<attribute type="RENDERER" name="NoiseAmp" data="FLOAT" value="0.02"/>
+			<attribute type="RENDERER" name="Occupancy" data="FLOAT" value="0.65"/>
+			<attribute type="RENDERER" name="Blur" data="FLOAT" value="0.4"/>
+			<attribute type="RENDERER" name="ShadingPhases" data="INT" value="10"/>
+		</attributes>
+
+		<scenes>
+			<scene name="SkyBox" >
+                <geometry name="skyBox" material="skybox" type="BOX" >
+                    <SCALE x="10" y="10" z="10" />
+                </geometry>
+            </scene>
+			<scene name="Model" param="USE_ADJACENCY UNITIZE SWAP_YZ">
+				<file name="models/skull.obj"/>
+				<ROTATE x="1" y="0.4" z="0.8" w="-90"/>
+			</scene>
+		</scenes>
+		
+		<viewports>
+			<viewport name="MainViewport">
+				<CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+			</viewport>
+		</viewports>
+		
+		<cameras>
+			<camera name="MainCamera" >
+				<viewport name="MainViewport"/>
+				<POSITION x=-2.2 y=0.5 z=1.0 />
+				<VIEW x=1.0 y=-0.3 z=-0.5 />
+				<UP x=0 y=1 z=0 />
+				<NEAR value=0.1 />
+				<FAR value=100 />
+			</camera>
+		</cameras>
+		
+		<lights>
+			<light name="Sun">
+				<DIRECTION x=2 y=-1 z=-2 />
+			</light>
+		</lights>
+		
+		<materialLibs>
+			<materialLib filename="NonPhotorealistic.mlib" />
+		</materialLibs>
+	</assets>
+	
+	<pipelines default="Silhouette">
+		<pipeline name="Silhouette" defaultCamera="MainCamera">
+			<pass class="default" name="gBuffer">
+
+				<scenes>
+					<scene name="Model" />
+				</scenes>
+
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="*" 
+						toMaterial="gBuffer" toLibrary="NonPhotorealistic" />
+				</materialMaps>
+				<viewport name="MainViewport" />
+				<renderTarget name="gBuffer" fromLibrary="NonPhotorealistic"/>
+			</pass>
+			<pass class="default" name="SkyBox" >
+                <scenes>
+                    <scene name="SkyBox" />
+                </scenes>
+                <camera name = "MainCamera" />
+				<viewport name="MainViewport" />
+                <materialMaps>
+                    <map fromMaterial="skybox"
+                        toMaterial="skybox" toLibrary="NonPhotorealistic" />
+                </materialMaps>
+				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
+            </pass>
+			<pass class="quad" name="shading">
+				<COLOR_CLEAR value="false" />
+				<DEPTH_CLEAR value="false" />
+				<viewport name="MainViewport" />
+				<material name="shading" fromLibrary="NonPhotorealistic" />
+				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
+			</pass>
+			<pass class="quad" name="blur">
+				<COLOR_CLEAR value="false" />
+				<viewport name="MainViewport" />
+				<material name="blur" fromLibrary="NonPhotorealistic" />
+				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
+			</pass>
+			<pass class="default" name="silhouette">
+				<COLOR_CLEAR value="false" />
+
+				<scenes>
+					<scene name="Model" />
+				</scenes>
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="*" 
+						toMaterial="silhouette" toLibrary="NonPhotorealistic" />
+				</materialMaps>
+				<viewport name="MainViewport" />
+				<renderTarget name="color" fromLibrary="NonPhotorealistic"/>
+			</pass>
+			<pass class="quad" name="distortion">
+				<COLOR_CLEAR value="false" />
+				<DEPTH_CLEAR value="false" />
+				<viewport name="MainViewport" />
+				<material name="distortion" fromLibrary="NonPhotorealistic" />
+			</pass>
+
+		</pipeline>
+	</pipelines>
+
+	<interface>
+        <window label="settings">
+			<var label="Line Color" type="RENDERER" context="CURRENT" component="LineColor" mode="COLOR" />
+			<var label="Edge Overhang Length" type="RENDERER" context="CURRENT" component="EdgeOverhangLength" def="min=0 max=1.0"/>
+			<var label="Edge Width" type="RENDERER" context="CURRENT" component="EdgeWidth" def="min=0 max=0.1"/>
+			<var label="Distortion" type="RENDERER" context="CURRENT" component="NoiseAmp" def="min=0 max=0.06"/>
+			<var label="Occupancy" type="RENDERER" context="CURRENT" component="Occupancy" def="min=0 max=1"/>
+			<var label="Blur" type="RENDERER" context="CURRENT" component="Blur" def="min=0 max=0.9"/>
+			<var label="Shading Phases" type="RENDERER" context="CURRENT" component="ShadingPhases" def="min=1 max=20"/>
+			<var label="Fill Color" type="RENDERER" context="CURRENT" component="FillColor" mode="COLOR" />
+         </window>
+    </interface>
+</project>
