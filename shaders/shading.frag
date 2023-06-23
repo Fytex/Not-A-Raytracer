@@ -7,7 +7,7 @@ in vec3 inc;
 
 // uniforms
 uniform sampler2D texNormal;
-uniform float occupancy;
+uniform float opacity;
 uniform int shading_phases;
 uniform vec4 diffuse;
 
@@ -53,5 +53,5 @@ void main(){
 		
 	}
 
-	texColor = vec4(colorOut.xyz, occupancy);
+	texColor = vec4(colorOut.xyz, opacity);
 }

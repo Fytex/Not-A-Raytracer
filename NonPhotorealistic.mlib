@@ -125,9 +125,9 @@
 							 type="LIGHT" context="Sun"
 							 component="DIRECTION" />
 
-					<valueof uniform="occupancy"
+					<valueof uniform="opacity"
 							 type="RENDERER" context="CURRENT"
-							 component="Occupancy" />
+							 component="Opacity" />
 					
 					<valueof uniform="shading_phases"
 							 type="RENDERER" context="CURRENT"
