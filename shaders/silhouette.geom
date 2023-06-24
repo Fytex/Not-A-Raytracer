@@ -18,7 +18,6 @@ out vec3 gSpine;
 
 
 bool isFront(vec3 a, vec3 b, vec3 c){
-    float threshold  = 0.0;
     
     return ((a.x * b.y - b.x * a.y) +
             (b.x * c.y - c.x * b.y) +
