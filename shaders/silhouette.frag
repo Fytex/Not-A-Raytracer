@@ -24,7 +24,7 @@ void main(){
 	if (depth < gl_FragCoord.z)
 	    discard;
 
-    float alpha = 1.0;
+        float alpha = 1.0;
 	float d = abs(gDist);
 	float tipLength = 2.0 * fwidth(d);
 	if (d > edgeWidth - tipLength)
